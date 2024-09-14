@@ -3,14 +3,17 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { getServerSession } from "next-auth";
 import { AuthOptions } from "../auth/[...nextauth]/options";
+import { getSession } from "next-auth/react";
 
 export async function POST(request: Request) {
   await dbConnect();
   try {
     const { username } = await request.json();
 
-    const session = await getServerSession(AuthOptions);
+    const session = await getSession();
     const sessionUser = session?.user;
+
+    console.log("session user",sessionUser)
 
     if (!session || !sessionUser) return APIResponse(400, "Not authenticated");
 

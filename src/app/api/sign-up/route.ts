@@ -8,8 +8,32 @@ export async function POST(request: Request) {
   await dbConnect();
 
   try {
-    const { username, email, password } = await request.json();
-    // console.log("signupaka",request.json())
+    // const { username, email, password } = await request.json();
+    // // console.log("signupaka",request.json())
+    // console.log(username, email, password)
+
+
+    let username, email, password;
+
+    const contentType = request.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+      // Handle JSON data
+      const data = await request.json();
+      username = data.username;
+      email = data.email;
+      password = data.password;
+    } else if (contentType && contentType.includes("multipart/form-data")) {
+      // Handle form-data
+      const formData = await request.formData();
+      username = formData.get("username") as string;
+      email = formData.get("email") as string;
+      password = formData.get("password") as string;
+    } else {
+      return APIResponse(400, "Unsupported content type");
+    }
+
+    console.log(username, email, password);
 
     const existingVerifiedUserByUsername = await UserModel.findOne({ username, isVerified: true });
     // if verified user exists with username; return response...

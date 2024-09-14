@@ -4,9 +4,16 @@ import { z } from "zod";
 import { usernameValidation } from "@/schemas/signUpSchema";
 import { APIResponse } from "@/helpers/APIResponse";
 
+import { getServerSession } from "next-auth";
+import { AuthOptions } from "../auth/[...nextauth]/options";
+
 export async function POST(request: Request) {
   await dbConnect();
   try {
+
+    const session = await getServerSession(AuthOptions);
+    console.log("thatis user session",session)
+
     const { username, code } = await request.json();
 
     const decodedUsername = decodeURIComponent(username);

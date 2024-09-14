@@ -1,18 +1,27 @@
-import React from "react";
+'use client'
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-function Home() {
-  return (
-    <>
-      <div>
-        <h1 className="bg-red-500 p-6 text-center text-white ">
-          chandan polai
-        </h1>
+function MyComponent() {
+  const { data: session } = useSession();
+  console.log("Session data:", session);
 
-        <Link href="/sign-in">signin</Link>
-      </div>
-    </>
+  return( 
+  <>
+  
+    <div>Welcome, {session?.user?.username}</div>
+    <div>
+      <Link href="/sign-in">
+      
+        <h3 className="mt-4 p-4 text-4xl bg-green-600">signin page click here</h3>
+      </Link>
+    </div>
+  </>
   );
+  
 }
 
-export default Home;
+
+export default MyComponent;
+
+

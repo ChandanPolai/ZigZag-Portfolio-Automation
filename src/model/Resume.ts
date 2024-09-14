@@ -34,7 +34,8 @@ export interface IExperience extends Document {
 }
 
 export interface Iprofilesummary extends Document {
-    summary: string;    
+    summary: string;   
+    minlength: 10; 
 }
 
 // Defining the Resume interface

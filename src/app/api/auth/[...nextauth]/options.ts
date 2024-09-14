@@ -56,7 +56,7 @@ export const AuthOptions: NextAuthOptions = {
           if (!isPasswordCorrect) {
             throw new Error("Incorrect Password");
           }
-          console.log(user)
+          console.log("thsi is loggedin user: " + user)
           return user;
         } catch (error: any) {
           console.error("Err in authorize: " + error);
@@ -74,6 +74,8 @@ export const AuthOptions: NextAuthOptions = {
         token.username = user.username;
       }
 
+      // console.log("usertoken data", token)
+
       if (
         (account?.provider === "google" ||
           account?.provider === "github" ||
@@ -81,7 +83,7 @@ export const AuthOptions: NextAuthOptions = {
         profile
       ) {
         const { email } = profile;
-        console.log("profiledata-----0,",profile)
+        
 
         if (email?.endsWith("@gmail.com")) {
           try {
@@ -108,6 +110,8 @@ export const AuthOptions: NextAuthOptions = {
         session.user.isAcceptingMessages = token.isAcceptingMessages;
         session.user.username = token.username;
       }
+      // console.log("this is session datata",session)
+      // console.log("this is token data session ke niche ",token)
       return session;
     },
     async signIn({ account, profile }) {
@@ -138,7 +142,7 @@ export const AuthOptions: NextAuthOptions = {
                 password: random,
               });
 
-              console.log(new_user)
+              // console.log(new_user)
 
               await new_user.save({ validateBeforeSave: false });
 
